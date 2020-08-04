@@ -41,7 +41,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.Configuration;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -109,10 +108,7 @@ public class MidRestConnector implements MidConnector {
 
         logger.debug("Getting certificate for phone number: " + request.getPhoneNumber());
 
-        URI uri = UriBuilder
-            .fromUri(endpointUrl)
-            .path(CERTIFICATE_PATH)
-            .build();
+        URI uri = URI.create(endpointUrl + CERTIFICATE_PATH).normalize();
         return postCertificateRequest(uri, request);
     }
 
@@ -122,10 +118,7 @@ public class MidRestConnector implements MidConnector {
 
         logger.debug("Signing for phone number: " + request.getPhoneNumber());
 
-        URI uri = UriBuilder
-            .fromUri(endpointUrl)
-            .path(SIGNATURE_PATH)
-            .build();
+        URI uri = URI.create(endpointUrl + SIGNATURE_PATH).normalize();
         return postSignatureRequest(uri, request);
     }
 
@@ -135,10 +128,7 @@ public class MidRestConnector implements MidConnector {
 
         logger.debug("Authenticating for phone number " + request.getPhoneNumber());
 
-        URI uri = UriBuilder
-            .fromUri(endpointUrl)
-            .path(AUTHENTICATION_PATH)
-            .build();
+        URI uri = URI.create(endpointUrl + AUTHENTICATION_PATH).normalize();
         return postAuthenticationRequest(uri, request);
     }
 
@@ -171,15 +161,12 @@ public class MidRestConnector implements MidConnector {
     @Override
     public MidSessionStatus getSessionStatus(MidSessionStatusRequest request, String path) throws MidSessionNotFoundException {
         logger.debug("Getting session status for " + request.getSessionID());
-        UriBuilder uriBuilder = UriBuilder
-            .fromUri(endpointUrl)
-            .path(path);
-
+        String uriString = endpointUrl + path + request.getSessionID();
         if (request.getTimeoutMs() != 0) {
-            uriBuilder.queryParam("timeoutMs", request.getTimeoutMs());
+            uriString += "?timeoutMs=" + request.getTimeoutMs();
         }
+        URI uri = URI.create(uriString).normalize();
 
-        URI uri = uriBuilder.build(request.getSessionID());
         try {
             return prepareClient(uri).get( MidSessionStatus.class);
         } catch (NotFoundException e) {

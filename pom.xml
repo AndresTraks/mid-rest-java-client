@@ -39,8 +39,8 @@
         <skip.integration.tests>true</skip.integration.tests>
         <skip.gpg.sign>true</skip.gpg.sign>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <profiles>
@@ -66,29 +66,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>2.28</version>
-        </dependency>
-        <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>2.28</version>
+            <version>2.25</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.28</version>
+            <version>2.25</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.9.9</version>
+            <version>2.9.7</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.10.5</version>
+            <version>2.9.7</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -156,7 +151,7 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
+            <version>1.1.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -239,6 +234,7 @@
                         <exclude>**/IT.java</exclude>
                         <exclude>**/ReadmeTest.java</exclude>
                     </excludes>
+                    <jvm>C:/Program Files/Java/jdk1.7.0_80/bin/java.exe</jvm>
                 </configuration>
                 <executions>
                     <execution>
@@ -348,37 +344,6 @@
                 <configuration>
                     <skip>${skip.gpg.sign}</skip>
                 </configuration>
-            </plugin>
-
-
-            <!-- to attach source with release -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- to attach javadoc with release -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>

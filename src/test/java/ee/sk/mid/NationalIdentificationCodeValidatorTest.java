@@ -29,8 +29,8 @@ package ee.sk.mid;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.time.LocalDate;
-
+import java.util.Calendar;
+import java.util.Date;
 import org.junit.Test;
 
 public class NationalIdentificationCodeValidatorTest {
@@ -72,22 +72,28 @@ public class NationalIdentificationCodeValidatorTest {
 
     @Test
     public void shouldGetBirthDate__year1800() {
-        LocalDate birthDate = MidNationalIdentificationCodeValidator.getBirthDate("17605030299");
+        Date birthDate = MidNationalIdentificationCodeValidator.getBirthDate("17605030299");
 
-        assertThat(birthDate, is(LocalDate.of(1876, 5, 3)));
+        assertThat(birthDate, is(createDate(1876, 5, 3)));
     }
 
     @Test
     public void shouldGetBirthDate_year1900() {
-        LocalDate birthDate = MidNationalIdentificationCodeValidator.getBirthDate("37605030299");
+        Date birthDate = MidNationalIdentificationCodeValidator.getBirthDate("37605030299");
 
-        assertThat(birthDate, is(LocalDate.of(1976, 5, 3)));
+        assertThat(birthDate, is(createDate(1976, 5, 3)));
     }
 
     @Test
     public void shouldGetBirthDate__year2000() {
-        LocalDate birthDate = MidNationalIdentificationCodeValidator.getBirthDate("60605030299");
+        Date birthDate = MidNationalIdentificationCodeValidator.getBirthDate("60605030299");
 
-        assertThat(birthDate, is(LocalDate.of(2006, 5, 3)));
+        assertThat(birthDate, is(createDate(2006, 5, 3)));
+    }
+
+    private Date createDate(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+        return calendar.getTime();
     }
 }

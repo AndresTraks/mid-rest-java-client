@@ -45,8 +45,8 @@ import org.slf4j.LoggerFactory;
 
 public class MidSessionStatusPoller {
 
-    public static final String SIGNATURE_SESSION_PATH = "/signature/session/{sessionId}";
-    public static final String AUTHENTICATION_SESSION_PATH = "/authentication/session/{sessionId}";
+    public static final String SIGNATURE_SESSION_PATH = "/signature/session/";
+    public static final String AUTHENTICATION_SESSION_PATH = "/authentication/session/";
 
     public static final int DEFAULT_POLLING_SLEEP_TIMEOUT_SECONDS = 3;
 

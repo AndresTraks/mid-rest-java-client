@@ -26,8 +26,8 @@ package ee.sk.mid;
  * #L%
  */
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MidNationalIdentificationCodeValidator {
     private static int[] MULTIPLIERS1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 1};
@@ -50,7 +50,7 @@ public class MidNationalIdentificationCodeValidator {
 
         try {
             getBirthDate(idCode);
-        } catch (DateTimeException ex) {
+        } catch (Exception ex) {
             return false;
         }
         return true;
@@ -75,7 +75,7 @@ public class MidNationalIdentificationCodeValidator {
     }
 
 
-    public static LocalDate getBirthDate(String idCode) {
+    public static Date getBirthDate(String idCode) {
         int year = Integer.parseInt(idCode.substring(1, 3));
         int month = Integer.parseInt(idCode.substring(3, 5));
         int dayOfMonth = Integer.parseInt(idCode.substring(5, 7));
@@ -94,6 +94,9 @@ public class MidNationalIdentificationCodeValidator {
             default:
                 year += 1800;
         }
-        return LocalDate.of(year, month, dayOfMonth);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setLenient(false);
+        calendar.set(year, month, dayOfMonth);
+        return calendar.getTime();
     }
 }
